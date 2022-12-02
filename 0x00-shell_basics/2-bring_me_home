@@ -1,5 +1,2 @@
-
 #!/bin/bash
-“cd /root"
-
-
+cd /root
