@@ -1,0 +1,3 @@
+
+#!/bin/bash
+cat school.mgc cat school file --magic-file=magic school
