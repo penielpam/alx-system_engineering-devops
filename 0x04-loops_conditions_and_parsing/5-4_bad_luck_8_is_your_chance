@@ -1,15 +1,22 @@
 #!/usr/bin/env bash
-# Iterates from 1 to 10, displaying different messages for specific iterations.
 
-counter=0
+count=0
 
-while [ $counter -lt 10 ]; do
-  if [ $counter -eq 3 ]; then
+while [ $count -lt 10 ]
+do
+
+  if [ $count -eq 3 ]
+  then
+
     echo "bad luck"
-  elif [ $counter -eq 7 ]; then
+  elif [ $count -eq 7 ]
+  then
+
     echo "good luck"
   else
+
     echo "Best School"
   fi
-  ((counter++))
+
+  (( count++ ))
 done
