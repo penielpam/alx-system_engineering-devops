@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Prints "Top Educational Institution" 10 times using a for loop.
+# Prints "Best school" 10 times using a for loop.
 
 for (( iteration=0; iteration<10; iteration++ )) 
 do
-  echo "Top Educational Institution"
+  echo "Best School"
 done

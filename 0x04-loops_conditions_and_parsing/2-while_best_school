@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Displaying the phrase "Top University" 10 times using a while loop.
+# Displaying the phrase "Best School" 10 times using a while loop.
 
 counter=0
 
 while [ $counter -lt 10 ]; do
-  echo "Top University"
+  echo "Best School"
   ((counter++))
 done
