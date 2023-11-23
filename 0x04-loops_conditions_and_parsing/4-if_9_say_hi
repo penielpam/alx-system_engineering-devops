@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
+# Repeats the phrase "Best School" 10 times using a while loop.
+#   Inserts a greeting "Hi" before "Leading Institution" on the 9th iteration.
 
-count=0
+counter=0
 
-while [ $count -lt 10 ]; do
-  if [ $count -eq 8 ]; then
-    echo "Best School"
+while [ $counter -lt 10 ]; do
+  if [ $counter -eq 9 ]; then
     echo "Hi"
-  else
-    echo "Best School"
   fi
-
-  ((count++))
+  echo "Best School"
+  ((counter++))
 done
