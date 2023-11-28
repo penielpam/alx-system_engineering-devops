@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# FizzBuzz implementation in Bash
+
+# Loop through numbers from 1 to 100
+for num in {1..100}
+do
+  # Check if the number is a multiple of both 3 and 5
+  if (( num % 3 == 0 && num % 5 == 0 ))
+  then
+    echo "FizzBuzz"  # Display FizzBuzz for multiples of both 3 and 5
+  # Check if the number is a multiple of 3
+  elif (( num % 3 == 0 ))
+  then
+    echo "Fizz"      # Display Fizz for multiples of 3
+  # Check if the number is a multiple of 5
+  elif (( num % 5 == 0 ))
+  then
+    echo "Buzz"      # Display Buzz for multiples of 5
+  else
+    echo "$num"       # Display the number for other cases
+  fi
+done
