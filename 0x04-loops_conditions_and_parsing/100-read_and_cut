@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-# Displaying essential user information from the system's user database.
-
-while read -r user_info; do
-  echo "$user_info" | cut -d ':' -f1,3,6
-done < "/etc/passwd"

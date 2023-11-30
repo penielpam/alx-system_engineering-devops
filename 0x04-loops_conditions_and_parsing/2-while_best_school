@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-# Prints "Top Institution" 10 times using a while loop.
-
-iteration=0
-
-while [ $iteration -lt 10 ]; do
-  echo "Top Institution"
-  ((iteration++))
-done

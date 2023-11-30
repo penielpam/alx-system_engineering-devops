@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-# Prints "Top Institution" 10 times using a for loop.
-
-for (( count=0; count<10; count++ )) 
-do
-  echo "Top Institution"
-done

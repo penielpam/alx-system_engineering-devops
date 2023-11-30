@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-# Creates a narrative based on user information from the `/etc/passwd` file.
-
-while IFS=':' read -r username password uid gid info home shell; do
-  echo "In the realm of system users, $username belongs to the $gid alliance,"\
-  "residing in the domain of $home and navigating through the realms with $shell."\
-  "$uid's stronghold is safeguarded by the mystical passcode $password,"\
-  "unraveling more secrets about the user: $info"
-done < "/etc/passwd"
