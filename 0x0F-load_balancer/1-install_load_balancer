@@ -1,17 +1,46 @@
 #!/usr/bin/env bash
-# Installs HAProxy version 2.4 with the following configurations:
+# Installs and configures HAproxy on a load balancer server
 
-CONFGF="\\\nlisten appname 0.0.0.0:80\n\tmode http\n\tbalance roundrobin\n\toption httpclose\n\toption forwardfor\n\tserver 297-web-01 35.196.78.105 check\n\tserver 297-web-02 3.239.101.159 check\n"
+# Install necessary packages and add HAproxy repository
+apt-get install -y software-properties-common
+add-apt-repository -y ppa:vbernat/haproxy-1.8
+apt-get update
+apt-get install -y haproxy=1.8.*
 
-sudo apt-get update
-sudo apt-get -y install nginx
-#version 1.5 and above
+# Enable HAproxy
+echo "ENABLED=1" >> /etc/default/haproxy
 
-sudo apt-get install -y haproxy=1.5\*
-#enable HAproxy can be managed via an init script
-sudo sed -i "s/ENABLED=0/ENABLED=1/" /etc/default/haproxy
-# include roundrobin and two servers
+# Backup the original configuration file and create a new one
+mv /etc/haproxy/haproxy.cfg{,.original}
+touch /etc/haproxy/haproxy.cfg
 
-sudo sed -i "\$a $CONFGF" /etc/haproxy/haproxy.cfg
+# Configure HAproxy with custom settings
+printf %s "global
+    log 127.0.0.1 local0 notice
+    maxconn 2000
+    user haproxy
+    group haproxy
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    retries 3
+    option redispatch
+    timeout connect  5000
+    timeout client  10000
+    timeout server  10000
+listen hbnb
+    bind 0.0.0.0:80
+    mode http
+    stats enable
+    stats uri /haproxy?stats
+    balance roundrobin
+    option httpclose
+    option forwardfor
+    server 59637-web-01 54.160.85.72:80 check
+    server 59637-web-02 35.175.132.106:80 check
+" >> /etc/haproxy/haproxy.cfg
 
-sudo service haproxy start
+# Start HAproxy service
+service haproxy start
