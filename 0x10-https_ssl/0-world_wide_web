@@ -1,44 +1,24 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Bash script to retrieve information about subdomains.
 
-# Function to display information about a subdomain
-display_info() {
-  local subdomain="$1"
-  local domain="$2"
-  local record_type="$3"
-  local destination="$4"
-  echo "The subdomain $subdomain is a $record_type record and points to $destination"
+function domain_check {
+    local domain_names=("www" "lb-01" "web-01" "web-02")
+
+    for subdomain in "${domain_names[@]}"; do
+        dig "${subdomain}"."$1" | grep -A1 'ANSWER SECTION:' | \
+        awk 'FNR == 2 {printf "The subdomain %s is a %s record and points to %s\n", var, $4, $5}' var="$subdomain"
+    done
 }
 
-# Function to get DNS information for a subdomain
-get_dns_info() {
-  local subdomain="$1"
-  local domain="$2"
-  dig_output=$(dig $subdomain.$domain | grep -A1 'ANSWER SECTION:')
-  record_type=$(echo "$dig_output" | awk '/IN\s/{print $4}')
-  destination=$(echo "$dig_output" | awk '/IN\s/{getline; print $3}')
-  display_info "$subdomain" "$domain" "$record_type" "$destination"
+function subdomain_check {
+    dig "${2}"."$1" | grep -A1 'ANSWER SECTION:' | \
+    awk 'FNR == 2 {printf "The subdomain %s is a %s record and points to %s\n", var, $4, $5}' var="$2"
 }
 
-# Main script
-
-# Check if domain argument is provided
-if [ -z "$1" ]; then
-  echo "Usage: $0 <domain> [subdomain]"
-  exit 1
-fi
-
-domain="$1"
-
-# Default subdomains to audit
-subdomains=("www" "lb-01" "web-01" "web-02")
-
-# Check if subdomain argument is provided
-if [ -n "$2" ]; then
-  subdomain="$2"
-  get_dns_info "$subdomain" "$domain"
+if [ $# -lt 1 ]; then
+    echo "*** Please provide a domain name ***"
+elif [ $# -eq 1 ]; then
+    domain_check "$1"
 else
-  # Display information for default subdomains
-  for subdomain in "${subdomains[@]}"; do
-    get_dns_info "$subdomain" "$domain"
-  done
+    subdomain_check "$1" "$2"
 fi
