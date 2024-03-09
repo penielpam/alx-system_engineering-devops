@@ -1,0 +1,34 @@
+**Postmortem: Navigating the Database Storm - Lessons Learned from the February 8, 2024 Web Stack Outage**
+
+
+**Issue Summary:**
+- **Duration:** February 8, 2024, 10:00 AM - 2:00 PM (GMT+1)
+- **Impact:** The outage affected the primary service, leading to a 30% decline in user access. Users experienced slow response times and intermittent service disruptions.
+
+**Root Cause:**
+The root cause of the outage was identified as an unexpected surge in database connections, causing a bottleneck and subsequent failure in handling incoming requests.
+
+**Timeline:**
+- **10:00 AM:** Issue detected through monitoring alerts indicating an unusually high number of database connections.
+- **10:15 AM:** Initial investigation focused on identifying potential DDoS attacks or external threats.
+- **10:45 AM:** Misleading investigation path - DDoS ruled out, attention shifted towards network issues.
+- **11:30 AM:** Escalation to the database and network teams as the source of the problem remained unclear.
+- **12:15 PM:** Database team identified the surge in connections as the root cause.
+- **1:00 PM:** Resolution initiated by optimizing database connection handling and implementing rate limiting.
+- **2:00 PM:** Service fully restored, and monitoring confirmed a stable environment.
+
+**Root Cause and Resolution:**
+- **Root Cause:** The surge in database connections was caused by a combination of increased user activity and a software bug that failed to release connections promptly, leading to a rapid accumulation of open connections and subsequent service degradation.
+- **Resolution:** The issue was addressed by implementing a connection pool optimization, releasing unused connections more efficiently, and introducing rate limiting to prevent excessive connections from overwhelming the database.
+
+**Corrective and Preventative Measures:**
+1. **Optimize Database Connection Handling:** Implement measures to efficiently manage and release database connections, preventing bottlenecks during peak usage.
+2. **Enhance Monitoring:** Enhance monitoring tools to provide real-time visibility into database connection metrics and rapidly identify anomalies.
+3. **Automated Scaling:** Explore and implement automated scaling solutions to dynamically adjust resources based on demand, ensuring system resilience during traffic spikes.
+4. **Regular Load Testing:** Conduct regular load testing to simulate heavy traffic conditions and identify potential bottlenecks or performance issues proactively.
+5. **Documentation and Training:** Document the incident response process and provide training to teams involved to improve efficiency and coordination during similar incidents.
+
+**Conclusion:**
+The outage on , was a result of unforeseen database connection issues exacerbated by increased user activity. The prompt detection, focused investigation, and collaboration between teams led to a swift resolution. Moving forward, implementing corrective measures and proactive steps will enhance the system's stability, ensuring a more resilient web stack in the face of future challenges.
+
+**Medium Link** https://greatpam.medium.com/postmortem-navigating-the-database-storm-lessons-learned-from-the-february-8-2024-web-stack-71d884670e43
